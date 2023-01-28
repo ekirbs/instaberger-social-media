@@ -1,4 +1,5 @@
 const { Course, Student } = require('../models');
+const userController = require('./userController');
 
 module.exports = {
   // Get all courses
@@ -30,20 +31,27 @@ module.exports = {
         return res.status(500).json(err);
       });
   },
-  // Delete a course
-  deleteCourse(req, res) {
-    Course.findOneAndDelete({ _id: req.params.courseId })
-      .then((course) =>
-        !course
-          ? res.status(404).json({ message: 'No course with that ID' })
-          : Student.deleteMany({ _id: { $in: course.students } })
+  // Delete a Thought
+  deleteThought(req, res) {
+    Thought.findOneAndRemove({ _id: req.params.thoughtId })
+      .then((thought) => User.findOneAndUpdate(
+        { username: thought.username },
+        { $pull: { thoughts: thought._id } },
+        { new: true }
+      ))
+      .then((user) => 
+      user
+        ? res.status(404).json({ message: 'No user with this id!' })
+        : res.json(user)
       )
-      .then(() => res.json({ message: 'Course and students deleted!' }))
-      .catch((err) => res.status(500).json(err));
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
   },
-  // Update a course
-  updateCourse(req, res) {
-    Course.findOneAndUpdate(
+  // Update a Thought
+  updateThought(req, res) {
+    Thought.findOneAndUpdate(
       { _id: req.params.courseId },
       { $set: req.body },
       { runValidators: true, new: true }
