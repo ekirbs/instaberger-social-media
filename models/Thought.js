@@ -1,31 +1,32 @@
 const { Schema, model } = require('mongoose');
 
 // Schema to create a course model
-const courseSchema = new Schema(
+const thoughtSchema = new Schema(
   {
-    courseName: {
+    thoughtText: {
+      type: String,
+      required: true,
+      min_length: 1,
+      max_length: 280
+    },
+    createdAt: {
+      type: Date,
+      // default: () => new Date(+new Date() + 84 * 24 * 60 * 60 * 1000),
+      default: Date.now()
+    },
+    username: {
       type: String,
       required: true,
     },
-    inPerson: {
-      type: Boolean,
-      default: true,
+    reactions: {
+      type: Schema.Types.ObjectId,
     },
-    startDate: {
-      type: Date,
-      default: Date.now(),
-    },
-    endDate: {
-      type: Date,
-      // Sets a default value of 12 weeks from now
-      default: () => new Date(+new Date() + 84 * 24 * 60 * 60 * 1000),
-    },
-    students: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'student',
-      },
-    ],
+    // students: [
+    //   {
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'student',
+    //   },
+    // ],
   },
   {
     toJSON: {
@@ -35,6 +36,6 @@ const courseSchema = new Schema(
   }
 );
 
-const Course = model('course', courseSchema);
+const Thought = model('Thought', thoughtSchema);
 
-module.exports = Course;
+module.exports = Thought;
