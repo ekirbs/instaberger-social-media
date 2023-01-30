@@ -1,7 +1,7 @@
 const { ObjectId } = require('mongoose').Types;
 const { User, Thought } = require('../models');
 
-// Aggregate function to get the number of students overall
+// Aggregate function to get the number of Users overall
 const totalCount = async () =>
   User.aggregate()
     .count('userCount')
@@ -10,21 +10,21 @@ const totalCount = async () =>
 // Aggregate function for getting the overall grade using $avg
 // const grade = async (userId) =>
 //   User.aggregate([
-//     // only include the given student by using $match
+//     // only include the given user by using $match
 //     { $match: { _id: ObjectId(userId) } },
 //     {
 //       $unwind: '$thoughts',
 //     },
 //     {
 //       $group: {
-//         _id: ObjectId(studentId),
+//         _id: ObjectId(userId),
 //         overallGrade: { $avg: '$thoughts.score' },
 //       },
 //     },
 //   ]);
 
 module.exports = {
-  // Get all students
+  // Get all users
   getUsers(req, res) {
     User.find()
       .then(async (users) => {
@@ -39,10 +39,10 @@ module.exports = {
         return res.status(500).json(err);
       });
   },
-  // Get a single student
+  // Get a single user
   getSingleUser(req, res) {
     User.findOne({ _id: req.params.userId })
-      .select('-__v')  // one underscore or two?
+      .select('-__v')
       .populate("thoughts", "friends")
       .then(async (user ) =>
         !user
@@ -57,13 +57,13 @@ module.exports = {
         return res.status(500).json(err);
       });
   },
-  // create a new student
+  // create a new user
   createUser(req, res) {
     User.create(req.body)
       .then((user) => res.json(user))
       .catch((err) => res.status(500).json(err));
   },
-  // Delete a student and remove them from the course
+  // Delete a user and remove them from the database
   deleteUser(req, res) {
     User.findOneAndRemove({ _id: req.params.userId })
       .then((user) =>
@@ -88,7 +88,7 @@ module.exports = {
       });
   },
 
-  // Add a reaction(thought) to a student
+  // Add a reaction(thought) to a user
   addReaction(req, res) {
     console.log('You are adding a thought/reaction');
     console.log(req.body);
