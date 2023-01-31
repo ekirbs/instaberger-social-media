@@ -1,11 +1,11 @@
 const { User, Thought } = require('../models');
 const userController = require('./userController');
 
-// Aggregate function to get the number of Users overall
-const totalCount = async () =>
-  Thought.aggregate()
-    .count("thoughtCount")
-    .then((numberOfThoughts) => numberOfThoughts);
+// Aggregate function to get the number of thoughts overall
+// const totalCount = async () =>
+//   Thought.aggregate()
+//     .count("thoughtCount")
+//     .then((numberOfThoughts) => numberOfThoughts);
 
 module.exports = {
   // Get all thoughts
@@ -14,7 +14,7 @@ module.exports = {
       const thoughts = await Thought.find();
       const thoughtObj = {
         thoughts,
-        totalCount: await totalCount(),
+        // totalCount: await totalCount(),
       };
       return res.json(thoughtObj);
     } catch (error) {
@@ -28,7 +28,7 @@ module.exports = {
     //   })
     //   .catch((err) => res.status(500).json(err));
   },
-  // Get a course
+  // Get a thought
   getSingleThought(req, res) {
     Thought.findOne({ _id: req.params.thoughtId })
       .select('-__v')
@@ -42,7 +42,7 @@ module.exports = {
         return res.status(500).json(err);
       });
   },
-  // Create a course
+  // Create a thought
   createThought: async (req, res) => {
     try {
       const thought = await Thought.create(req.body);
