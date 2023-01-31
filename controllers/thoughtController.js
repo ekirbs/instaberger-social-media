@@ -1,5 +1,4 @@
 const { User, Thought } = require('../models');
-const userController = require('./userController');
 
 // Aggregate function to get the number of thoughts overall
 // const totalCount = async () =>
@@ -39,9 +38,7 @@ module.exports = {
   // Create a thought
   createThought: async (req, res) => {
     try {
-      console.log(req.body);
       const thought = await Thought.create(req.body);
-      console.log(thought);
       res.json(thought);
     } catch (error) {
       console.log(error);
@@ -93,15 +90,13 @@ module.exports = {
   // Add a reaction to a thought
   addReaction: async (req, res) => {
     try {
-      console.log("You are adding a reaction");
-      console.log(req.body);
       const thought = await Thought.findOneAndUpdate(
         { _id: req.params.thoughtId },
         { $addToSet: { reactions: req.body } },
         { runValidators: true, new: true }
       );
       if (!thought) {
-        res.status(404).json({ message: "No thought found with that ID :(" });
+        res.status(404).json({ message: "No thought found with that ID" });
         return;
       }
       res.json(thought);
@@ -119,9 +114,8 @@ module.exports = {
         { runValidators: true, new: true }
       );
         !thought
-          ? res.status(404).json({ message: "No thought found with that ID :(" })
+          ? res.status(404).json({ message: "No thought found with that ID" })
           : res.json(thought)
-      // );
     } catch (error) {
       console.log(error);
       res.status(500).json(error);

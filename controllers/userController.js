@@ -1,4 +1,4 @@
-const { ObjectId } = require("mongoose").Types;
+// const { ObjectId } = require("mongoose").Types;
 const { User, Thought } = require("../models");
 
 // Aggregate function to get the number of Users overall
@@ -42,7 +42,6 @@ module.exports = {
     try {
       const user = await User.create(req.body);
       res.json(user);
-      console.log(user);
     } catch (error) {
       res.status(500).json(error);
     }
@@ -92,15 +91,13 @@ module.exports = {
   // Add a friend to a user
   addFriend: async (req, res) => {
     try {
-      console.log("You are adding a friend");
-      console.log(req.body);
       const user = await User.findOneAndUpdate(
         { _id: req.params.userId },
         { $addToSet: { friends: req.params.friendId } },
         { runValidators: true, new: true }
       );
       !user
-        ? res.status(404).json({ message: "No user found with that ID :(" })
+        ? res.status(404).json({ message: "No user found with that ID" })
         : res.json(user);
     } catch (error) {
       res.status(500).json(error);
@@ -115,7 +112,7 @@ module.exports = {
         { runValidators: true, new: true }
       );
         !user
-          ? res.status(404).json({ message: "No user found with that ID :(" })
+          ? res.status(404).json({ message: "No user found with that ID" })
           : res.json(user)
     } catch (error) {
       console.log(error);
