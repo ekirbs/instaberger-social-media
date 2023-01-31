@@ -1,9 +1,8 @@
 const { Schema, model } = require("mongoose");
-// const thoughtSchema = require('./Thought');
-// const friendSchema = require('./Friend');
 
 const emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 // const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+// const emailRegex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
 // Schema to create user model
 const userSchema = new Schema(
@@ -30,12 +29,6 @@ const userSchema = new Schema(
         ref: "User",
       },
     ],
-    // thoughts: [{
-    //   type: String,
-    //   required: true,
-    //   max_length: 50,
-    // },],
-    // friends : [friendSchema],
   },
   {
     toJSON: {

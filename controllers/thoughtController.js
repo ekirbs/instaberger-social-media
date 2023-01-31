@@ -21,12 +21,6 @@ module.exports = {
       console.log(error);
       res.status(500).json(error);
     }
-    // Thought.find({})
-    //   .then((thoughts) => {
-    //     console.log(thoughts);
-    //     res.json(thoughts)
-    //   })
-    //   .catch((err) => res.status(500).json(err));
   },
   // Get a thought
   getSingleThought(req, res) {
@@ -53,12 +47,6 @@ module.exports = {
       console.log(error);
       return res.status(500).json(error);
     }
-    // Thought.create(req.body)
-    //   .then((thought) => res.json(thought))
-    //   .catch((err) => {
-    //     console.log(err);
-    //     return res.status(500).json(err);
-    //   });
   },
   // update a thought
   updateThought: async (req, res) => {
@@ -92,7 +80,7 @@ module.exports = {
         { new: true }
       )
       if (!user) {
-        res.status(404).json({ message: "No such user exists" });
+        res.status(404).json({ message: "No such thought exists" });
         return;
       }
       res.json("Thought successfully deleted");
@@ -101,21 +89,6 @@ module.exports = {
       console.log(error);
       res.status(500).json(error);
     }
-    // Thought.findOneAndRemove({ _id: req.params.thoughtId })
-    //   .then((thought) => User.findOneAndUpdate(
-    //     { username: thought.username },
-    //     { $pull: { thoughts: thought._id } },
-    //     { new: true }
-    //   ))
-    //   .then((user) => 
-    //   user
-    //     ? res.status(404).json({ message: 'No user with this id!' })
-    //     : res.json(user)
-    //   )
-    //   .catch((err) => {
-    //     console.log(err);
-    //     res.status(500).json(err);
-    //   });
   },
   // Add a reaction to a thought
   addReaction: async (req, res) => {
