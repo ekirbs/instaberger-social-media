@@ -152,18 +152,4 @@ module.exports = {
       res.status(500).json(error);
     }
   },
-  // Update a Thought
-  // updateThought(req, res) {
-  //   Thought.findOneAndUpdate(
-  //     { _id: req.params.courseId },
-  //     { $set: req.body },
-  //     { runValidators: true, new: true }
-  //   )
-  //     .then((course) =>
-  //       !course
-  //         ? res.status(404).json({ message: 'No course with this id!' })
-  //         : res.json(course)
-  //     )
-  //     .catch((err) => res.status(500).json(err));
-  // },
 };
