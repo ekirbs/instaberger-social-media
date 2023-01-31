@@ -25,19 +25,31 @@ const totalCount = async () =>
 
 module.exports = {
   // Get all users
-  getUsers(req, res) {
-    User.find()
-      .then(async (users) => {
-        const userObj = {
-          users,
-          totalCount: await totalCount(),
-        };
-        return res.json(userObj);
-      })
-      .catch((err) => {
-        console.log(err);
-        return res.status(500).json(err);
-      });
+  getUsers: async (req, res)=> {
+    // User.find()
+    //   .then(async (users) => {
+    //     const userObj = {
+    //       users,
+    //       totalCount: await totalCount(),
+    //     };
+    //     return res.json(userObj);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     return res.status(500).json(err);
+    //   });
+    try {
+      const users = await User.find()
+      const userObj = {
+              users,
+              totalCount: await totalCount(),
+            };
+       return res.json(userObj);
+    } catch (error) {
+      console.log(err);
+      return res.status(500).json(err);
+    }
+
   },
   // Get a single user
   getSingleUser(req, res) {
@@ -47,10 +59,10 @@ module.exports = {
       .then(async (user ) =>
         !user
           ? res.status(404).json({ message: 'No user with that ID' })
-          : res.json({
-        user,
-              grade: await grade(req.params.userId),
-            })
+          : res.json(user)
+        // user,
+        //       grade: await grade(req.params.userId),
+        //     })
       )
       .catch((err) => {
         console.log(err);
@@ -58,34 +70,65 @@ module.exports = {
       });
   },
   // create a new user
-  createUser(req, res) {
-    User.create(req.body)
-      .then((user) => res.json(user))
-      .catch((err) => res.status(500).json(err));
+  createUser: async (req, res) => {
+    try {
+      const user = await User.create(req.body)
+      res.json(user)
+    } catch (error) {
+      res.status(500).json(error);
+    }
+    // const user = await User.create(req.body)
+    //  res.json(user)
+    //   .catch((err) => res.status(500).json(err));
   },
   // Delete a user and remove them from the database
-  deleteUser(req, res) {
-    User.findOneAndRemove({ _id: req.params.userId })
-      .then((user) =>
-        !user
-          ? res.status(404).json({ message: 'No such user exists' })
-          : Thought.findOneAndUpdate(
+  deleteUser: async (req, res) => {
+    try {
+      const user = await User.findOneAndRemove({ _id: req.params.userId })
+      // .then((user) =>
+        if (!user) {
+          res.status(404).json({ message: 'No such user exists' })
+          return
+        }
+        const thought = await Thought.findOneAndUpdate(
               { users: req.params.userId },
               { $pull: { users: req.params.userId } },
               { new: true }
             )
-      )
-      .then((thought) =>
+      // )
+      // .then((thought) =>
         !thought
           ? res.status(404).json({
               message: 'User deleted, but no thoughts found',
             })
           : res.json({ message: 'User successfully deleted' })
-      )
-      .catch((err) => {
-        console.log(err);
+    } catch (error) {
+      console.log(err);
         res.status(500).json(err);
-      });
+    }
+  //   const user = await User.findOneAndRemove({ _id: req.params.userId })
+  //     // .then((user) =>
+  //       if (!user) {
+  //         res.status(404).json({ message: 'No such user exists' })
+  //         return
+  //       }
+  //       const thought = await Thought.findOneAndUpdate(
+  //             { users: req.params.userId },
+  //             { $pull: { users: req.params.userId } },
+  //             { new: true }
+  //           )
+  //     // )
+  //     // .then((thought) =>
+  //       !thought
+  //         ? res.status(404).json({
+  //             message: 'User deleted, but no thoughts found',
+  //           })
+  //         : res.json({ message: 'User successfully deleted' })
+
+  //     .catch((err) => {
+  //       console.log(err);
+  //       res.status(500).json(err);
+  //     });
   },
 
   // Add a reaction(thought) to a user

@@ -1,9 +1,11 @@
 const { Schema, model } = require('mongoose');
-const assignmentSchema = require('./Assignment');
+const thoughtSchema = require('./Thought');
+const friendSchema = require('./Friend');
+
 
 const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
-// Schema to create Student model
+// Schema to create user model
 const userSchema = new Schema(
   {
     username: {
@@ -18,12 +20,12 @@ const userSchema = new Schema(
       unique: true,
       match: emailRegex
     },
-    thoughts: {
+    thoughts: [{
       type: String,
       required: true,
       max_length: 50,
-    },
-    friends : [assignmentSchema],
+    },],
+    friends : [friendSchema],
   },
   {
     toJSON: {

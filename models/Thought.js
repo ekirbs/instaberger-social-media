@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 const reactionSchema = require("./Reaction");
 const dateFormat = require("../utils/dateFormat");
 
-// Schema to create a course model
+// Schema to create a thought model
 const thoughtSchema = new Schema(
   {
     thoughtText: {
@@ -13,7 +13,6 @@ const thoughtSchema = new Schema(
     },
     createdAt: {
       type: Date,
-      // default: () => new Date(+new Date() + 84 * 24 * 60 * 60 * 1000),
       default: Date.now(),
       get: (timestamp) => dateFormat(timestamp)
     },
