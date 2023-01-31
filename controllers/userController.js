@@ -7,37 +7,9 @@ const totalCount = async () =>
     .count('userCount')
     .then((numberOfUsers) => numberOfUsers);
 
-// Aggregate function for getting the overall grade using $avg
-// const grade = async (userId) =>
-//   User.aggregate([
-//     // only include the given user by using $match
-//     { $match: { _id: ObjectId(userId) } },
-//     {
-//       $unwind: '$thoughts',
-//     },
-//     {
-//       $group: {
-//         _id: ObjectId(userId),
-//         overallGrade: { $avg: '$thoughts.score' },
-//       },
-//     },
-//   ]);
-
 module.exports = {
   // Get all users
   getUsers: async (req, res)=> {
-    // User.find()
-    //   .then(async (users) => {
-    //     const userObj = {
-    //       users,
-    //       totalCount: await totalCount(),
-    //     };
-    //     return res.json(userObj);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     return res.status(500).json(err);
-    //   });
     try {
       const users = await User.find()
       const userObj = {
@@ -49,7 +21,6 @@ module.exports = {
       console.log(err);
       return res.status(500).json(err);
     }
-
   },
   // Get a single user
   getSingleUser(req, res) {
@@ -60,9 +31,6 @@ module.exports = {
         !user
           ? res.status(404).json({ message: 'No user with that ID' })
           : res.json(user)
-        // user,
-        //       grade: await grade(req.params.userId),
-        //     })
       )
       .catch((err) => {
         console.log(err);
@@ -77,9 +45,6 @@ module.exports = {
     } catch (error) {
       res.status(500).json(error);
     }
-    // const user = await User.create(req.body)
-    //  res.json(user)
-    //   .catch((err) => res.status(500).json(err));
   },
   // Delete a user and remove them from the database
   deleteUser: async (req, res) => {
@@ -106,29 +71,6 @@ module.exports = {
       console.log(err);
         res.status(500).json(err);
     }
-  //   const user = await User.findOneAndRemove({ _id: req.params.userId })
-  //     // .then((user) =>
-  //       if (!user) {
-  //         res.status(404).json({ message: 'No such user exists' })
-  //         return
-  //       }
-  //       const thought = await Thought.findOneAndUpdate(
-  //             { users: req.params.userId },
-  //             { $pull: { users: req.params.userId } },
-  //             { new: true }
-  //           )
-  //     // )
-  //     // .then((thought) =>
-  //       !thought
-  //         ? res.status(404).json({
-  //             message: 'User deleted, but no thoughts found',
-  //           })
-  //         : res.json({ message: 'User successfully deleted' })
-
-  //     .catch((err) => {
-  //       console.log(err);
-  //       res.status(500).json(err);
-  //     });
   },
 
   // Add a reaction(thought) to a user
