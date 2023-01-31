@@ -11,9 +11,14 @@ const app = express();
 // const activity = cwd.includes('01-Activities')
 //   ? cwd.split('/01-Activities/')[1]
 //   : cwd;
+app.use((req, res, next) => {
+  console.log(`${req.method} request received on endpoint ${req.url}`);
+  next();
+});
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
 app.use(routes);
 
 db.once('open', () => {

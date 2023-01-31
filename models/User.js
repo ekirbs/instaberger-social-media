@@ -1,8 +1,8 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require("mongoose");
 // const thoughtSchema = require('./Thought');
 // const friendSchema = require('./Friend');
 
-const emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
+const emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 // const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
 // Schema to create user model
@@ -12,22 +12,24 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      trim: true
+      trim: true,
     },
     email: {
       type: String,
       required: true,
       unique: true,
-      match: emailRegex
+      match: emailRegex,
     },
     thoughts: {
       type: Schema.Types.ObjectId,
-      ref: "Thought"
+      ref: "Thought",
     },
-    friends: {
-      type: Schema.Types.ObjectId,
-      ref: "User"
-    },
+    friends: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     // thoughts: [{
     //   type: String,
     //   required: true,
@@ -38,17 +40,15 @@ const userSchema = new Schema(
   {
     toJSON: {
       getters: true,
-      virtuals: true
+      virtuals: true,
     },
   }
 );
 
-userSchema
-.virtual("friendCount")
-.get(function () {
+userSchema.virtual("friendCount").get(function () {
   return this.friends.length;
-})
+});
 
-const User = model('User', userSchema);
+const User = model("User", userSchema);
 
 module.exports = User;

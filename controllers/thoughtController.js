@@ -45,7 +45,9 @@ module.exports = {
   // Create a thought
   createThought: async (req, res) => {
     try {
+      console.log(req.body);
       const thought = await Thought.create(req.body);
+      console.log(thought);
       res.json(thought);
     } catch (error) {
       console.log(error);
