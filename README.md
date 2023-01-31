@@ -19,7 +19,7 @@ Once the files are all locally on a system, it will require node modules in orde
 
 This is a back end build only.  There is no front end to interact with as a user, so in order to use this application, it will need to be run locally using a program like Insomnia. Once the node moduels needed are installed, press npm start to open the server on a port.  Then move over to Insomnia to interact with the program.  See the tutorial video below for a reference on how to use Insomnia to send requests to the back end.
 
-[![Tutorial](./assets/images/tutor-img.png)](  ))
+[![Tutorial](./assets/images/tutor-img.png)]( https://user-images.githubusercontent.com/117387546/215893640-c6ea381d-cc7b-4188-b837-dfa6611e7f86.mp4 ))
 
 ## Credits
 
