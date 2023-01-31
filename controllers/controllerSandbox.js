@@ -58,3 +58,31 @@
   //       console.log(err);
   //       res.status(500).json(err);
   //     });
+
+  // const thought = await Thought.findOneAndUpdate(
+      //   { users: req.params.userId },
+      //   { $pull: { users: req.params.userId } },
+      //   { new: true }
+      // );
+      // )
+      // .then((thought) =>
+      // !thought
+      //   ? res.status(404).json({
+      //       message: "User deleted, but no thoughts found",
+      //     })
+      //   : res.json({ message: "User successfully deleted" });
+
+      //   console.log("You are adding a thought/reaction");
+  //   console.log(req.body);
+  //   User.findOneAndUpdate(
+  //     { _id: req.params.userId },
+  //     { $addToSet: { reactions: req.body } },
+  //     { runValidators: true, new: true }
+  //   )
+  //     .then((user) =>
+  //       !user
+  //         ? res.status(404).json({ message: "No user found with that ID :(" })
+  //         : res.json(user)
+  //     )
+  //     .catch((err) => res.status(500).json(err));
+  // },
