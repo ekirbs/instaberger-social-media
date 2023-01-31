@@ -1,5 +1,5 @@
-// const { Schema, Types } = require('mongoose');
-const { Schema, model } = require('mongoose');
+const { Schema, Types } = require('mongoose');
+// const { Schema, model } = require('mongoose');
 
 
 const reactionSchema = new Schema(
@@ -19,7 +19,8 @@ const reactionSchema = new Schema(
     },
     createdAt: {
       type: Date,
-      default: Date.now,
+      default: Date.now(),
+      get: (timestamp) => dateFormat(timestamp)
     },
   },
   {
@@ -30,7 +31,7 @@ const reactionSchema = new Schema(
   }
 );
 
-const Reaction = model('Reaction', reactionSchema);
+// const Reaction = model('Reaction', reactionSchema);
 
-
-module.exports = Reaction;
+module.exports = reactionSchema;
+// module.exports = Reaction;

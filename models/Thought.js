@@ -20,10 +20,13 @@ const thoughtSchema = new Schema(
       type: String,
       required: true,
     },
-    reactions: [reactionSchema], 
-    // {
-    //   type: Schema.Types.ObjectId,
-    // },
+    reactions: [reactionSchema],
+    // reactions: [
+    //   {
+    //     type: Schema.Types.ObjectId,
+    //     ref: "Reaction"
+    //   },
+    // ]
     // students: [
     //   {
     //     type: Schema.Types.ObjectId,
